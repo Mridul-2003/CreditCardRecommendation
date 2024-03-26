@@ -16,7 +16,7 @@ def load_data():
     connection_string = "DefaultEndpointsProtocol=https;AccountName=cardrecommenderdata;AccountKey=YRiTpfIbJoWUFeOdmf0TaQDCCz9BDVdkrOXfmnIQM+M5wkVkwBwOd5MFUGW0W3wTWNGzEZDJ/cw8+ASttIr4RQ==;EndpointSuffix=core.windows.net"
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
     container_name = "carddata"
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob="CardData.csv")
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob="Card.csv")
 
     # Download CSV data from Azure Blob Storage
     downloaded_bytes = blob_client.download_blob().readall()
@@ -34,7 +34,7 @@ bank_features = Bank2_data[['Card Name', 'Features']]
 def load_tfidf_vectorizer():
     connection_string = "DefaultEndpointsProtocol=https;AccountName=cardrecommenderdata;AccountKey=YRiTpfIbJoWUFeOdmf0TaQDCCz9BDVdkrOXfmnIQM+M5wkVkwBwOd5MFUGW0W3wTWNGzEZDJ/cw8+ASttIr4RQ==;EndpointSuffix=core.windows.net"
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    blob_client = blob_service_client.get_blob_client(container='cardtfidf', blob="tfidf_vectorizer.pkl")
+    blob_client = blob_service_client.get_blob_client(container='cardtfidf', blob="tfidf1_vectorizer.pkl")
     downloaded_bytes = blob_client.download_blob().readall()
     tfidf_vectorizer = pickle.loads(downloaded_bytes)
     return tfidf_vectorizer
