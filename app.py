@@ -16,7 +16,7 @@ def load_data():
     connection_string = "DefaultEndpointsProtocol=https;AccountName=cardrecommenderdata;AccountKey=YRiTpfIbJoWUFeOdmf0TaQDCCz9BDVdkrOXfmnIQM+M5wkVkwBwOd5MFUGW0W3wTWNGzEZDJ/cw8+ASttIr4RQ==;EndpointSuffix=core.windows.net"
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
     container_name = "carddata"
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob="BankData.csv")
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob="CreditBankData.csv")
 
     # Download CSV data from Azure Blob Storage
     downloaded_bytes = blob_client.download_blob().readall()
@@ -56,16 +56,28 @@ def recommend_bank(user_inputs):
 
     # Get recommended banks
     recommended_banks = bank_features.iloc[bank_indices]['Card Name'].tolist()
+    # Initialize an empty list to hold the image URLs or paths
+    image_list = []
 
-    return recommended_banks, user_similarity[bank_indices]
+# Iterate over the recommended card names
+   for card_name in recommendations:
+    # Query the Bank3_data DataFrame to find the matching card name and get the Image
+        image_url = Bank2_data.loc[Bank2_data['Card Name'] == card_name, 'Image'].values
+        if image_url.size > 0:
+            # Append the image URL to the list
+            image_list.append(image_url[0])
+
+
+    return recommended_banks, user_similarity[bank_indices],image_list
 
 @app.route('/recommend', methods=['POST'])
 def get_recommendations():
     user_inputs = request.json  # Assuming JSON input
-    recommendations, similarity_scores = recommend_bank(user_inputs)
+    recommendations, similarity_scores,image_list = recommend_bank(user_inputs)
     response = {
         "recommended_banks": recommendations,
         "similarity_scores": similarity_scores.tolist()
+        "Images":image_list
     }
     return jsonify(response)
 
