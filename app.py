@@ -58,27 +58,30 @@ def recommend_bank(user_inputs):
     recommended_banks = bank_features.iloc[bank_indices]
     # Initialize an empty list to hold the image URLs or paths
     image_list = []
-
+    features_list=[]
     # Iterate over the recommended card names
     for card_name in recommended_banks['Card Name'].tolist():
         # Query the Bank2_data DataFrame to find the matching card name and get the Image
         image_url = Bank2_data.loc[Bank2_data['Card Name'] == card_name, 'Image'].values
+        features  = Bank2_data.loc[Bank2_data['Card Name'] == card_name,'Features'].values
+        features_list.append(features[0])
         if image_url.size > 0:
             # Append the image URL to the list
             image_list.append(image_url[0])
         else:
             image_list.append(None)
 
-    return recommended_banks['Card Name'].tolist(), user_similarity[bank_indices], image_list
+    return recommended_banks['Card Name'].tolist(), user_similarity[bank_indices], image_list,features_list
 
 @app.route('/recommend', methods=['POST'])
 def get_recommendations():
     user_inputs = request.json  # Assuming JSON input
-    recommendations, similarity_scores, image_list = recommend_bank(user_inputs)
+    recommendations, similarity_scores, image_list,features_list = recommend_bank(user_inputs)
     response = {
         "recommended_banks": recommendations,
         "similarity_scores": similarity_scores.tolist(),
-        "Images": image_list
+        "Images": image_list,
+        "Features":features_list,
     }
     return jsonify(response)
 
