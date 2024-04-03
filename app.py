@@ -69,7 +69,7 @@ def recommend_bank(user_inputs):
             # Append the image URL to the list
             image_list.append(image_url[0])
         else:
-            image_list.append(None)
+            image_list.append("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Credit-card-front.svg/512px-Credit-card-front.svg.png?20171209021222")
 
     return recommended_banks['Card Name'].tolist(), user_similarity[bank_indices], image_list,features_list
 
