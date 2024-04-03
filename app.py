@@ -65,7 +65,7 @@ def recommend_bank(user_inputs):
         image_url = Bank2_data.loc[Bank2_data['Card Name'] == card_name, 'Image'].values
         features  = Bank2_data.loc[Bank2_data['Card Name'] == card_name,'Features'].values
         features_list.append(features[0])
-        if image_url.size > 0:
+        if image_url.size > 0 and not pd.isna(image_url[0]):
             # Append the image URL to the list
             image_list.append(image_url[0])
         else:
