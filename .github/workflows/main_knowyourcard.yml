@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - knowyourcard
+name: Build and deploy Python app to Azure Web App - Knowyourcard
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Create and start virtual environment
         run: |
@@ -65,14 +65,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_ECA136E040DD45CCA46F0245A1B489E8 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_32FE43C14AC543A1B9109CAA4BBC98CE }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_240A1B3D381E4A5D822411EF2D0C09E4 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8AA2D554018E47E8B64F5614954BC2D6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2D4E1B82A1F24683822C526698F573C2 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1DCCA7F803C843B287510F1FE6CA4489 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'knowyourcard'
+          app-name: 'Knowyourcard'
           slot-name: 'Production'
           
