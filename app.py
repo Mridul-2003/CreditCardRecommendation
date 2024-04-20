@@ -1,3 +1,4 @@
+#Flask API
 from flask import Flask, request, jsonify
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
